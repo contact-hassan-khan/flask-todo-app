@@ -1,0 +1,14 @@
+{
+    "tasks": [
+        {
+            "id": 1,
+            "name": "Complete Flask Tutorial",
+            "description": "Learn how to build a web application using Flask."
+        },
+        {
+            "id": 2,
+            "name": "Create To-Do App",
+            "description": "Build a to-do application with Flask and MongoDB."
+        }
+    ]
+}
