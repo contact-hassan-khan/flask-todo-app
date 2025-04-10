@@ -4,54 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask To-Do App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .task-form {
-            margin-bottom: 20px;
-        }
-        .task-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .task-item {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .delete-btn {
-            background-color: #ff4444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Flask To-Do App</h1>
-    <div class="task-form">
-        <form action="/add_task" method="POST">
-            <input type="text" name="task_name" placeholder="Task Name" required>
-            <input type="text" name="task_description" placeholder="Task Description" required>
-            <button type="submit">Add Task</button>
-        </form>
+    <div class="container">
+        <header>
+            <h1>Flask To-Do App</h1>
+        </header>
+
+        <section class="task-form">
+            <form action="/add_task" method="POST">
+                <div class="form-group">
+                    <label for="task_name">Task Name</label>
+                    <input type="text" id="task_name" name="task_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="task_description">Task Description</label>
+                    <textarea id="task_description" name="task_description" rows="3" required></textarea>
+                </div>
+                <button type="submit">Add Task</button>
+            </form>
+        </section>
+
+        <section class="task-list">
+            <h2>Your Tasks</h2>
+            <ul>
+                {% for task in tasks %}
+                <li class="task-item">
+                    <div class="task-content">
+                        <h3 class="task-name">{{ task.name }}</h3>
+                        <p class="task-description">{{ task.description }}</p>
+                    </div>
+                    <button class="delete-btn" onclick="deleteTask('{{ task._id }}')">Delete</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
     </div>
-    <ul class="task-list">
-        {% for task in tasks %}
-            <li class="task-item">
-                <h3>{{ task.name }}</h3>
-                <p>{{ task.description }}</p>
-                <button class="delete-btn" onclick="deleteTask('{{ task._id }}')">Delete</button>
-            </li>
-        {% endfor %}
-    </ul>
 
     <script>
         function deleteTask(taskId) {
